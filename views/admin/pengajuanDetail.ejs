@@ -1,0 +1,64 @@
+<%- include("../template/header") %> 
+<%- include("../components/admin/navigasi") %> 
+<div class="row ">
+        <%- include("../components/admin/sideNavigasi") %> 
+    <div class="row mb-5">
+
+        <div class="mt-4 col-9 offset-3">
+            <div class="row justify-content-center ">
+                <div class="col-11">
+                    <div class="card">
+                        <div class="card-body">
+                                <!-- Title -->
+                <%- include("../components/titleCard", {title: "PELAYANAN SURAT KETERANGAN MISKIN"}) %> 
+                           <!-- Content -->
+                   <div class="row mb-2 list-text-violet">
+                      <div class="col-3 offset-1">NIK PEMOHON</div>
+                      <div class="col-8">: 3578273024560002</div>
+                   </div>
+                   <div class="row mb-2 list-text-violet">
+                        <div class="col-3 offset-1">NIK KEPALA KELUARGA</div>
+                        <div class="col-8">: 3578273024560002</div>
+                    </div>
+                    <div class="row mb-2 list-text-violet">
+                        <div class="col-3 offset-1">KEPERLUAN SKM</div>
+                        <div class="col-8">: PENDIDIKAN</div>
+                    </div>
+                    <div class="row mb-2 list-text-violet">
+                        <div class="col-3 offset-1">NO HP</div>
+                        <div class="col-8">: 0851231234133</div>
+                    </div>
+
+                    <div class="row mt-3">
+                       <div class="col-5 offset-1 list-text-violet">
+                         <span>SCAN KARTU KELUARG A</span>
+                         <img src="/images/sistem/logo.png" class="img-fluid" alt="...">
+                       </div> 
+                       <div class="col-5 offset-1 list-text-violet">
+                           <span>SCAN KARTU KELUARGA</span>
+                           <img src="/images/sistem/logo.png" class="img-fluid" alt="...">
+                       </div>
+                    </div>
+
+                        <div class="row mt-4 ">
+                           <div class="col-4 offset-1">
+                               <div class="d-grid gap-2 my-3">
+                                  <button class="btn btn-danger">TOLAK PENGAJUAN</button>
+                                </div>
+                           </div>
+                           <div class="col-4 offset-2">
+                               <div class="d-grid gap-2 my-3">
+                                    <button class="btn btn-success">TERIMA PENGAJUAN</button>
+                                </div>
+                           </div>
+                        </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../template/footer") %> 

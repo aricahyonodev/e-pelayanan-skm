@@ -5,4 +5,7 @@ module.exports = {
   riwayat: (req, res) => {
     res.render("admin/riwayat");
   },
+  pengajuanDetail: (req, res) => {
+    res.render("admin/pengajuanDetail");
+  },
 };
