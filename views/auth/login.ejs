@@ -1,3 +1,21 @@
 <%- include("../template/header") %> 
-    ini page Login
+<div class="row justify-content-center align-items-center vh-100">
+    <div class="col-4">
+        <%- include("../components/imgLogo") %> 
+         <div class="card-default">
+                <%- include("../components/titleCard", {title: "e-pelayanan"}) %> 
+                 <div class="mb-4  position-relative">
+                    <input type="email" class="form-control ps-5 " name="email" placeholder="Email">
+                    <span class="iconify position-absolute input-form-icon" data-icon="ic:baseline-email"data-width="28" data-height="28"  style="color: #828282;"></span>
+                </div>
+                <div class="mb-4  position-relative">
+                    <input type="password" class="form-control ps-5 " name="password" placeholder="Password">
+                    <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-lock-open" style="color: #828282;" data-width="28" data-height="28"></span>
+                </div>
+                <div class="d-grid gap-2 my-3">
+                    <button type="button" class="btn btn-primary bgd-blue default-btn">Login</button>
+                </div>
+               <p class="mb-4 mt-3">Belum memiliki akun? <a href="/daftar">Daftar</a></p>
+    </div>
+</div>
 <%- include("../template/footer") %> 
