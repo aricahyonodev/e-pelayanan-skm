@@ -5,7 +5,35 @@
 body {
     background-color: #F4F5F7;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-x: hidden;
+}
+
+.card-nav-default{
+    border-radius: 8px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    color: #5E72E4;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.card-nav-active{
+    background-color: #5E72E4;
+    color: #FFFFFF;
+}
+.text-label-form{
+    color: #383862;
+    font-weight: 500;
+    font-size: 18px;
+}
+span.text-child-label{
+    color: #828282;
+    font-weight: 500;
+    font-size: 14px;
+}
+.icon-nav-active{
+    /* background-color: #5E72E4; */
+    color: #FFFFFF;
 }
 .card-default{
     border-radius: 16px;
@@ -27,6 +55,22 @@ body {
     width: 120px;
     height: 120px;
 }
+
+/* Navigasi */
+.navigasi-user-brand {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 300;
+    cursor: pointer;
+    margin-bottom: 80px;
+}
+.navigasi-user-logout{
+    margin-bottom: 80px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 300;
+    cursor: pointer;
+}
 .title-card{
     color: #383862;
     font-weight: 600;
@@ -34,14 +78,22 @@ body {
     text-align: center;
     margin-bottom: 38px;
     margin-top: 20px;
-    font-size: 36px;
+    font-size: 32px;
 }
 /* Css Color */
 .bgd-blue {
     background-color: #324CDD;
 }
+.bgd-green {
+    background-color: #2DCE89;
+}
+
 .default-btn {
     color: white;
     text-transform: uppercase;
     font-weight: 600;
+}
+/* User Style */
+.container-user{
+    padding: 0 12% ;
 }

@@ -1,3 +1,62 @@
 <%- include("../../template/header") %> 
-    Page Form
+<div class="container-user">
+    <%- include("../../components/user/navigasi") %> 
+    <div class="row justify-content-center align-items-center h-100">
+    <div class="col-11">
+         <div class="card-default mb-5">
+
+                <!-- Title -->
+                <%- include("../../components/titleCard", {title: "PELAYANAN SURAT KETERANGAN MISKIN"}) %> 
+                
+                <!-- Navigasi Card -->
+                <%- include("../../components/user/cardNavigasi") %> 
+
+                <!-- Form -->
+                 <div class="mb-4  ">
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">NIK PEMOHON</label>
+                   <div class="position-relative">
+                        <input type="email" class="form-control ps-5 " name="email" placeholder="NIK">
+                        <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
+                   </div>
+                </div>
+                 <div class="mb-4  ">
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">NIK KEPALA KELUARGA</label>
+                   <div class="position-relative">
+                        <input type="email" class="form-control ps-5 " name="email" placeholder="NIK">
+                        <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
+                   </div>
+                </div>
+                 <div class="mb-4  ">
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">SCAN KARTU KELUARGA <span class="text-child-label">( PDF / FOTO ) - Max. 2MB</span></label>
+                    <input type="file" class="form-control " name="email" placeholder="Email">
+                </div>
+                 <div class="mb-4  ">
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">KEPERLUAN SKM</label>
+                   <div class="position-relative">
+                        <input type="email" class="form-control ps-5 " name="email" placeholder="Email">
+                    <span class="iconify position-absolute input-form-icon" data-icon="ic:baseline-email"data-width="28" data-height="28"  style="color: #828282;"></span>
+                   </div>
+                </div>
+                 <div class="mb-4  ">
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">NO HP <span class="text-child-label">( No HP Pemohon)</span></label>
+                   <div class="position-relative">
+                        <input type="email" class="form-control ps-5 " name="email" placeholder="">
+                   <span class="iconify position-absolute input-form-icon" data-icon="fluent:call-24-filled" style="color: #828282;" data-width="28" data-height="28"></span>
+                   </div>
+                </div>
+                 <div class="mb-4  ">
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">SCAN SURAT DARI INSTANSI TERKAIT YANG MEMPERSYARATKAN PENERBITAN SKM <span class="text-child-label">( PDF / FOTO ) - Max. 2MB</span></label>
+                    <input type="file" class="form-control " name="email" placeholder="Email">
+                   </div>
+
+                    <div class="d-grid gap-2 my-4">
+                    <button type="button" class="btn  bgd-green default-btn">Kirim</button>
+                </div>
+                </div>
+                
+               
+                
+    </div>
+</div>
+</div>
 <%- include("../../template/footer") %> 

@@ -3,9 +3,9 @@ module.exports = {
     res.render("user/pengajuanSKM/pengajuanForm");
   },
   menungguVerifikasi: (req, res) => {
-    res.render("user/pengajuanSKM/pengajuanMenungguVerifikasi");
+    res.render("user/pengajuanSkm/pengajuanMenungguVerifikasi");
   },
   selesai: (req, res) => {
-    res.render("user/pengajuanSKM/pengajuanSelesai");
+    res.render("user/pengajuanSkm/pengajuanSelesai");
   },
 };
