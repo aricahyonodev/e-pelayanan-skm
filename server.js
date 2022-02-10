@@ -17,6 +17,8 @@ const authRouter = require("./routers/web/auth/auth")
 App.use(authRouter)
 const pengajuanSKM = require("./routers/web/user/pengajuanSkm");
 App.use(pengajuanSKM);
+const adminRouter = require("./routers/web/admin/admin");
+App.use(adminRouter);
 
 // Routing Debug
 const pengajuan = require("./controllers/web/user/pengajuanSkmController")

@@ -71,6 +71,10 @@ span.text-child-label{
     font-weight: 300;
     cursor: pointer;
 }
+
+.top-navigasi-admin{
+    color: #FFFFFF;
+}
 .title-card{
     color: #383862;
     font-weight: 600;
@@ -86,6 +90,10 @@ span.text-child-label{
 }
 .bgd-green {
     background-color: #2DCE89;
+}
+.bgd-violet {
+    background-color: #383862;
+    color: #FFFFFF;
 }
 
 .default-btn {
