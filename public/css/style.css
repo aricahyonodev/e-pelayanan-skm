@@ -97,3 +97,15 @@ span.text-child-label{
 .container-user{
     padding: 0 12% ;
 }
+
+/* table */
+.table-default {
+    color: rgba(45, 24, 99, 0.8);
+}
+.tb-data-reguler{
+    font-size: 14px;
+}
+.tb-data-smBold{
+    font-weight: 600;
+    font-size: 18px;
+}
