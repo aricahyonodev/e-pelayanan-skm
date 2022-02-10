@@ -15,3 +15,5 @@ App.listen(PORT, () => {
 // Router Web
 const authRouter = require("./routers/web/auth/auth")
 App.use(authRouter)
+const pengajuanSKM = require("./routers/web/user/pengajuanSKM");
+App.use("/pengajuan-SKM", pengajuanSKM);
