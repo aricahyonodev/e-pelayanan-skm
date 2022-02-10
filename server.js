@@ -2,6 +2,8 @@ const Express = require('express');
 const App = Express();
 
 // CONFIG
+// Static File
+App.use(Express.static("public"));
 // Template Engine
 App.set("view engine", "ejs");
 // Router
