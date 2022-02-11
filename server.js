@@ -40,18 +40,20 @@ App.listen(PORT, () => {
 // Router Web
 const authRouter = require("./routers/web/auth/auth")
 App.use(authRouter)
-const authenticateSession = require("./module/authenticateSession"); 
-// App.use(authenticateLocalStorage)
+const authUserSession = require("./module/authenticateUserSession"); 
 const pengajuanSKM = require("./routers/web/user/pengajuanSkm");
-App.use("/pengajuan-skm", authenticateSession, pengajuanSKM);
+App.use("/pengajuan-skm", authUserSession, pengajuanSKM);
+const authAdminSession = require("./module/authenticateAdminSession"); 
 const adminRouter = require("./routers/web/admin/admin");
-App.use(adminRouter);
+App.use("/home", authAdminSession, adminRouter);
 
 const authApiRouter = require("./routers/api/auth/auth");
 App.use("/api", authApiRouter);
 const pengajuanSkmApiRouter = require("./routers/api/user/pengajuanSkm");
 const authenticateJwt = require("./module/authenticateJWT"); 
 App.use("/api/pengajuan-skm", authenticateJwt, pengajuanSkmApiRouter);
+const pengajuanSkmAdmin = require("./routers/api/admin/pengajuanSkm");
+App.use("/api/admin/", authenticateJwt, pengajuanSkmAdmin);
 // Routing Debug
 const pengajuan = require("./controllers/web/user/pengajuanSkmController")
 App.get("/ini/saya", pengajuan.form)

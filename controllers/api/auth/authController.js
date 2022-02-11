@@ -22,7 +22,7 @@ module.exports = {
           statusCode: 200,
         });
       } else {
-        const { _id, fullname, email } = results;
+        const { _id, fullname, email, level } = results;
         const tokenJWT = Jwt.sign(
           {  idUser: _id,fullname, email },
           process.env.TOKEN_SECRET
@@ -31,11 +31,11 @@ module.exports = {
         const resultData = {
           fullname,
           email,
+          level,
           TokenType: "Bearer",
           token: tokenJWT,
         };
-        console.log(tokenJWT);
-        req.session.token = tokenJWT;
+        req.session.levelUser = level;
         res.send({
           message: `Login Success`,
           statusCode: 200,

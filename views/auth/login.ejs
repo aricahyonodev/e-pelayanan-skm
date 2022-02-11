@@ -42,7 +42,14 @@
             if(message === "Login Success"){
                 email.value = ""
                 password.value = ""
-                window.location.href = "/pengajuan-skm/form";
+                if(results.level === "user"){
+                    window.location.href = "/pengajuan-skm/form";
+                }
+                if(results.level === "admin"){
+                    window.location.href = "/home/pengajuan";
+                }
+                console.log(results);
+                
             }
         } catch (error) {
             console.log(error);

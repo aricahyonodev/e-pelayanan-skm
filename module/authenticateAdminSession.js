@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
   try {
-    if(req.session.token){
+    if(req.session.levelUser === "admin"){
       return next();
     }
     res.redirect("/")

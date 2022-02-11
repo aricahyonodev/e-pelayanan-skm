@@ -22,22 +22,8 @@
                           <th scope="col">AKSI</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>
-                            <div class="tb-data-smBold">3578273024560002</div>
-                            <div class="tb-data-reguler">Tony Pratama</div>
-                          </td>
-                          <td><div class="tb-data-smBold">PENDIDIKAN</div></td>
-                          <td>
-                              <div class="tb-data-smBold">[MENUNGGU]</div>
-                              <div class="tb-data-reguler">PENGECEKAN BERKAS</div>
-                            </td>
-                            <td>
-                                <button class="btn btn-primary bgd-blue">Detail</button>
-                            </td>
-                        </tr>
+                      <tbody id="tableRow">
+                        
                       </tbody>
                     </table>
 
@@ -49,4 +35,48 @@
         </div>
     </div>
 </div>
+
+<script>
+ 
+  const getData  = async () =>{
+     const config = {
+          headers: {
+             'Authorization': `Bearer ${await localStorage.getItem('token')}`,
+            },
+      }
+      const getDatatPengajuanSMK = await fetch('/api/admin/pengajuan', config) 
+      const {results} = await getDatatPengajuanSMK.json();
+
+      const tableRow = document.getElementById("tableRow")
+      if(results.length === 0){
+          tableRow.innerHTML += `
+                  <tr>
+                    <td colspan="4">Belum ada data</td>
+                  </tr>`;
+      }else{
+      results.map((dt, i)=>{
+        tableRow.innerHTML += `
+                       <tr>
+                          <th scope="row">${1+i}</th>
+                          <td>
+                            <div class="tb-data-smBold">${dt.nikPemohon}</div>
+                            <div class="tb-data-reguler">Tony Pratama</div>
+                          </td>
+                          <td><div class="tb-data-smBold">${dt.keperluan}</div></td>
+                          <td>
+                              <div class="tb-data-smBold">[${dt.status}]</div>
+                              <div class="tb-data-reguler">PENGECEKAN BERKAS</div>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary bgd-blue">Detail</button>
+                            </td>
+                        </tr>`
+      })
+    }
+      
+  }
+
+  getData();
+
+</script>
 <%- include("../template/footer") %> 
