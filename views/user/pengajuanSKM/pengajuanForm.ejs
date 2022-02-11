@@ -15,14 +15,14 @@
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">NIK PEMOHON</label>
                    <div class="position-relative">
-                        <input type="email" class="form-control ps-5 " id="nikPemohon" placeholder="NIK">
+                        <input type="number" class="form-control ps-5 " id="nikPemohon" placeholder="NIK">
                         <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
                    </div>
                 </div>
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">NIK KEPALA KELUARGA</label>
                    <div class="position-relative">
-                        <input type="email" class="form-control ps-5 " id="nikKepalaKeluarga" placeholder="NIK">
+                        <input type="number" class="form-control ps-5 " id="nikKepalaKeluarga" placeholder="NIK">
                         <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
                    </div>
                 </div>
@@ -32,31 +32,82 @@
                 </div>
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">KEPERLUAN SKM</label>
-                   <div class="position-relative">
-                        <input type="email" class="form-control ps-5 " id="keperluanSkm" placeholder="Email">
-                    <span class="iconify position-absolute input-form-icon" data-icon="ic:baseline-email"data-width="28" data-height="28"  style="color: #828282;"></span>
+                   <div class="form-check mb-3 ms-5">
+                      <input class="form-check-input" type="radio" value="PENDIDIKAN" name="keperluanSkm" id="flexRadioDefault1">
+                        <label class="form-check-label text-violet" for="flexRadioDefault1">
+                           PENDIDIKAN
+                   </label>
+                   </div>
+                   <div class="form-check mb-3 ms-5">
+                      <input class="form-check-input" type="radio" value="BANTUAN HUKUM" name="keperluanSkm" id="flexRadioDefault2">
+                        <label class="form-check-label text-violet" for="flexRadioDefault2">
+                           BANTUAN HUKUM (Perceraian, Rehabilitasi Napza, Sidang Waris, Isbat Nikah)
+                   </label>
+                   </div>
+                   <div class="form-check mb-3 ms-5">
+                      <input class="form-check-input" type="radio" value="DENDA AKTE KELAHIRAN" name="keperluanSkm" id="flexRadioDefault3">
+                        <label class="form-check-label text-violet" for="flexRadioDefault3">
+                           DENDA AKTE KELAHIRAN
+                   </label>
                    </div>
                 </div>
+
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">NO HP <span class="text-child-label">( No HP Pemohon)</span></label>
                    <div class="position-relative">
-                        <input type="email" class="form-control ps-5 " name="email" placeholder="">
+                        <input type="number" class="form-control ps-5 " id="noHp" placeholder="">
                    <span class="iconify position-absolute input-form-icon" data-icon="fluent:call-24-filled" style="color: #828282;" data-width="28" data-height="28"></span>
                    </div>
                 </div>
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">SCAN SURAT DARI INSTANSI TERKAIT YANG MEMPERSYARATKAN PENERBITAN SKM <span class="text-child-label">( PDF / FOTO ) - Max. 2MB</span></label>
-                    <input type="file" class="form-control " name="email" placeholder="Email">
+                    <input type="file" class="form-control " id="scanSuratPendukung" placeholder="Email">
                    </div>
 
                     <div class="d-grid gap-2 my-4">
-                    <button type="button" class="btn  bgd-green default-btn">Kirim</button>
+                    <button type="submit" id="submitFormPengajuan" class="btn  bgd-green default-btn">Kirim</button>
                 </div>
                 </div>
-                
-               
-                
     </div>
 </div>
 </div>
+
+<script>
+   document.getElementById("submitFormPengajuan").addEventListener("click", async ()=>{
+      const nikPemohon = document.getElementById("nikPemohon");
+      const nikKepalaKeluarga = document.getElementById("nikKepalaKeluarga");
+      const scanKartuKeluarga = document.getElementById("scanKartuKeluarga");
+      const keperluanSkm = document.querySelector('input[name="keperluanSkm"]:checked');
+      const noHp = document.getElementById("noHp");
+      const scanSuratPendukung = document.getElementById("scanSuratPendukung");
+
+      const formData = new FormData()
+      formData.append('nikPemohon', nikPemohon.value);
+      formData.append('nikKepalaKeluarga', nikKepalaKeluarga.value);
+      formData.append('keperluanSkm', keperluanSkm.value);
+      formData.append('noHp', noHp.value);
+      formData.append('scanKartuKeluarga', scanKartuKeluarga.files[0]);
+      formData.append('scanSuratPendukung', scanSuratPendukung.files[0]);
+       const token = await localStorage.getItem("token");
+       console.log(token);
+       const config = {
+          headers: {
+             'Authorization': `Bearer ${token}`,
+            },
+          method : 'post',
+          body : formData
+      }
+      const sendPengajuan = await fetch('/api/pengajuan-skm/form', config)
+      const {message} = await sendPengajuan.json();
+      if(message === "Pengajuan SKM Success"){
+         nikPemohon.value =""
+         nikPemohon.value =""
+         keperluanSkm.value =""
+         noHp.value = ""
+         scanKartuKeluarga.value = ""
+         scanSuratPendukung.value = ""
+         console.log(message);
+      }
+   })
+</script>
 <%- include("../../template/footer") %> 

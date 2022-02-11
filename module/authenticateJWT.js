@@ -4,11 +4,12 @@ module.exports = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization.split(" ");
     const token = authHeader[1];
-    jwt.verify(token, process.env.TOKEN_SECRET);
-    next();
+    const decode = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.idUser = decode.idUser
+    return next();
   } catch (err) {
     res.send({
-      message: `Failed to get data`,
+      message: `${req.headers.authorization}`,
       statusCode: 500,
     });
   }

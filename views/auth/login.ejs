@@ -36,6 +36,9 @@
                 body: JSON.stringify(dataUser)
             });
             const { message, results  } = await sendLogin.json(); 
+            
+            localStorage.setItem("token", results.token)
+            
             if(message === "Login Success"){
                 email.value = ""
                 password.value = ""

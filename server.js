@@ -1,6 +1,7 @@
 const Express = require('express');
 const App = Express();
 const Session = require("express-session");
+
 // CONFIG
 // .env
 const Dotenv = require("dotenv");
@@ -11,6 +12,9 @@ DatabaseMongoDB();
 //Cors
 const Cors = require("cors");
 App.options("*", Cors());
+// File Upload
+const FileUpload = require("express-fileupload");
+App.use(FileUpload());
 // Session
 App.use(
   Session({
@@ -45,7 +49,9 @@ App.use(adminRouter);
 
 const authApiRouter = require("./routers/api/auth/auth");
 App.use("/api", authApiRouter);
+const pengajuanSkmApiRouter = require("./routers/api/user/pengajuanSkm");
 const authenticateJwt = require("./module/authenticateJWT"); 
+App.use("/api/pengajuan-skm", authenticateJwt, pengajuanSkmApiRouter);
 // Routing Debug
 const pengajuan = require("./controllers/web/user/pengajuanSkmController")
 App.get("/ini/saya", pengajuan.form)

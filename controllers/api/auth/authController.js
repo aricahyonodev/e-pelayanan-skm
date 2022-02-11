@@ -22,9 +22,9 @@ module.exports = {
           statusCode: 200,
         });
       } else {
-        const { fullname, email } = results;
+        const { _id, fullname, email } = results;
         const tokenJWT = Jwt.sign(
-          {  fullname, email },
+          {  idUser: _id,fullname, email },
           process.env.TOKEN_SECRET
         );
 
