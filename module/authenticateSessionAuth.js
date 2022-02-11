@@ -1,9 +1,17 @@
 module.exports = (req, res, next) => {
   try {
-    // if(!req.session.levelUser){
-      return next();
+    console.log(req.session.levelUser);
+
+    switch (req.session.levelUser) {
+      case "user": return res.redirect("/pengajuan-skm/form");
+      case "admin": return res.redirect("/home/pengajuan");
+      default:
+        return next();
+    }
+    // if(!req.session.levelUser === "user"){
+    //   return res.redirect("/pengajuan-skm/form")
     // }
-    // res.redirect("/pengajuan-skm/form")
+    
     
   } catch (err) {
     res.redirect("/pengajuan-skm/form");

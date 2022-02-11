@@ -3,7 +3,7 @@ const Router = Express.Router();
 
 const authController = require("../../../controllers/web/auth/authController")
 const authenticateSessionAuth = require("../../../module/authenticateSessionAuth"); 
-const authUserSession = require("../../../module/authenticateUserSession"); 
+const authUserSession = require("../../../module/authenticateSession"); 
 Router.get("/", authenticateSessionAuth, authController.login)
 Router.get("/daftar", authenticateSessionAuth, authController.register);
 Router.get("/keluar", authUserSession, authController.logout);

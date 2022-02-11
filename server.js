@@ -40,12 +40,11 @@ App.listen(PORT, () => {
 // Router Web
 const authRouter = require("./routers/web/auth/auth")
 App.use(authRouter)
-const authUserSession = require("./module/authenticateUserSession"); 
+const authUserSession = require("./module/authenticateSession"); 
 const pengajuanSKM = require("./routers/web/user/pengajuanSkm");
 App.use("/pengajuan-skm", authUserSession, pengajuanSKM);
-const authAdminSession = require("./module/authenticateAdminSession"); 
 const adminRouter = require("./routers/web/admin/admin");
-App.use("/home", authAdminSession, adminRouter);
+App.use("/home", authUserSession, adminRouter);
 
 const authApiRouter = require("./routers/api/auth/auth");
 App.use("/api", authApiRouter);
