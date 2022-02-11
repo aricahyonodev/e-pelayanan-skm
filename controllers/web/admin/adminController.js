@@ -8,4 +8,7 @@ module.exports = {
   pengajuanDetail: (req, res) => {
     res.render("admin/pengajuanDetail");
   },
+  riwayatDetail: (req, res) => {
+    res.render("admin/riwayatDetail");
+  },
 };
