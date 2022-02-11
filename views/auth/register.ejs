@@ -5,25 +5,62 @@
          <div class="card-default">
                 <%- include("../components/titleCard", {title: "pendaftaran"}) %> 
                 <div class="mb-4  position-relative">
-                    <input type="text" class="form-control ps-5" name="fullname" placeholder="Nama Lengkap">
+                    <input type="text" class="form-control ps-5" id="fullname" placeholder="Nama Lengkap">
                    <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
                 </div>
                 <div class="mb-4  position-relative">
-                    <input type="email" class="form-control ps-5 " name="email" placeholder="Email">
+                    <input type="email" class="form-control ps-5 " id="email" placeholder="Email">
                     <span class="iconify position-absolute input-form-icon" data-icon="ic:baseline-email"data-width="28" data-height="28"  style="color: #828282;"></span>
                 </div>
                 <div class="mb-4  position-relative">
-                    <input type="password" class="form-control ps-5 " name="password" placeholder="Password">
+                    <input type="password" class="form-control ps-5 " id="password" placeholder="Password">
                     <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-lock-open" style="color: #828282;" data-width="28" data-height="28"></span>
                 </div>
                 <div class="mb-4  position-relative">
-                    <input type="password" class="form-control ps-5 " name="confirmPassword" placeholder="Ketik Ulang Password">
+                    <input type="password" class="form-control ps-5 " id="confirmPassword" placeholder="Ketik Ulang Password">
                     <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-lock-open" style="color: #828282;" data-width="28" data-height="28"></span>
                 </div>
                 <div class="d-grid gap-2 my-3">
-                    <button type="button" class="btn btn-primary bgd-blue default-btn">Login</button>
+                    <button type="button" id="submit" class="btn btn-primary bgd-blue default-btn">Login</button>
                 </div>
                <p class="mb-4 mt-3">Sudah memiliki akun? <a href="/">Login</a></p>
     </div>
 </div>
+
+<script>
+
+    document.getElementById("submit").addEventListener("click", async ()=>{
+        const fullname = document.getElementById("fullname");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+
+        const dataUser = {
+            fullname : fullname.value,
+            email : email.value,
+            password : password.value,
+        }
+
+        try {
+            const sendRegister =  await fetch("/api/register", {
+                headers: { 'Content-Type': 'application/json'},
+                method: "post",
+                body: JSON.stringify(dataUser)
+            });
+            const { message } = await sendRegister.json(); 
+            if(message === "Register Data Success"){
+                fullname.value = "" 
+                email.value = ""
+                password.value = ""
+                confirmPassword.value = ""
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    })
+   
+
+
+</script>
 <%- include("../template/footer") %> 

@@ -5,17 +5,45 @@
          <div class="card-default">
                 <%- include("../components/titleCard", {title: "e-pelayanan"}) %> 
                  <div class="mb-4  position-relative">
-                    <input type="email" class="form-control ps-5 " name="email" placeholder="Email">
+                    <input type="email" class="form-control ps-5 " id="email" placeholder="Email">
                     <span class="iconify position-absolute input-form-icon" data-icon="ic:baseline-email"data-width="28" data-height="28"  style="color: #828282;"></span>
                 </div>
                 <div class="mb-4  position-relative">
-                    <input type="password" class="form-control ps-5 " name="password" placeholder="Password">
+                    <input type="password" class="form-control ps-5 " id="password" placeholder="Password">
                     <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-lock-open" style="color: #828282;" data-width="28" data-height="28"></span>
                 </div>
                 <div class="d-grid gap-2 my-3">
-                    <button type="button" class="btn btn-primary bgd-blue default-btn">Login</button>
+                    <button type="button" id="btnSubmit" class="btn btn-primary bgd-blue default-btn">Login</button>
                 </div>
                <p class="mb-4 mt-3">Belum memiliki akun? <a href="/daftar">Daftar</a></p>
     </div>
 </div>
+
+<script>
+  
+    // console.log(token);
+    document.getElementById("btnSubmit").addEventListener("click", async ()=>{
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const dataUser = {
+            email : email.value,
+            password : password.value,
+        }
+        try {
+            const sendLogin =  await fetch("/api/login", {
+                headers: { 'Content-Type': 'application/json'},
+                method: "post",
+                body: JSON.stringify(dataUser)
+            });
+            const { message, results  } = await sendLogin.json(); 
+            if(message === "Login Success"){
+                email.value = ""
+                password.value = ""
+                window.location.href = "/pengajuan-skm/form";
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    })
+</script>
 <%- include("../template/footer") %> 

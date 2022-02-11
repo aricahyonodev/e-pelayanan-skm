@@ -5,4 +5,9 @@ module.exports = {
     register : (req, res) =>{
         res.render("auth/register")
     },
+    logout:(req, res)=>{
+        req.session.destroy((err) => {
+        res.redirect("/");
+        });
+    }
 }
