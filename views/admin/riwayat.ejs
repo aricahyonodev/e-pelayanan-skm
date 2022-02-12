@@ -48,15 +48,16 @@
       }
       const getDatatPengajuanSMK = await fetch('/api/admin/riwayat', config) 
       const {results} = await getDatatPengajuanSMK.json();
-
+      
       const tableRow = document.getElementById("tableRow")
       console.log(results);
-      if(results.length === 0){
+      console.log(results[0].riwayat_skm);
+      if(results[0].riwayat_skm.length === 0){
           tableRow.innerHTML = `
           <%- include("../components/tableEmpty.ejs") %> 
                   `;
       }else{
-      results.map((dt, i)=>{
+      results[0].riwayat_skm.map((dt, i)=>{
         tableRow.innerHTML += `
                       <tr>
                           <th scope="row">${1+i}</th>

@@ -1,6 +1,6 @@
-const RandomString = require("../../../module/randomString")
-const Path = require("path");
 const PengajuanSKM = require('../../../models/pengajuanSkm');
+const mongoose = require('mongoose');
+const User = require("../../../models/user")
 
 module.exports = {
   pengajuan: (req, res) => {
@@ -35,22 +35,26 @@ module.exports = {
     });
   },
   pengajuanIdTerima: (req, res) => {
-    PengajuanSKM.findByIdAndUpdate( req.params.id,{ status: 'SELESAI' }, (err, result) => {
-      if (err) {
+    PengajuanSKM.findByIdAndUpdate(
+      req.params.id,
+      { status: "SELESAI", adminId: req.idUser },
+      (err, result) => {
+        if (err) {
+          res.send({
+            message: `Failed to get data`,
+            statusCode: 500,
+          });
+        }
+        console.log(result);
         res.send({
-          message: `Failed to get data`,
-          statusCode: 500,
+          message: `pengajuan terima success`,
+          statusCode: 200,
         });
       }
-      console.log(result);
-      res.send({
-        message: `pengajuan terima success`,
-        statusCode: 200,
-      });
-    });
+    );
   },
   pengajuanIdTolak: (req, res) => {
-    PengajuanSKM.findByIdAndUpdate( req.params.id,{ status: 'DITOLAK' }, (err, result) => {
+    PengajuanSKM.findByIdAndUpdate( req.params.id,{ status: 'DITOLAK', adminId: req.idUser }, (err, result) => {
       if (err) {
         res.send({
           message: `Failed to get data`,
@@ -64,23 +68,41 @@ module.exports = {
       });
     });
   },
-  riwayat: (req, res) => {
-    PengajuanSKM.find({ status: {$ne : "MENUNGGU VERIFIKASI"} }, (err, result) => {
-      if (err) {
-        res.send({
-          message: `Failed to get data`,
-          statusCode: 500,
-        });
-      }
+  riwayat: async (req, res) => {
+    let getData = await User.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.idUser),
+        },
+      },
+      {
+        $lookup: {
+          from: "pengajuan_skms",
+          localField: "_id",
+          foreignField: "adminId",
+          as: "riwayat_skm",
+        },
+      },
+    ]).exec();
+
+    if(!getData){
+       res.send({
+            message: `Failed to get data`,
+            statusCode: 500,
+          });
+    }else{
       res.send({
-        message: `Get Data Pengajuan SKM Success`,
-        statusCode: 200,
-        results: result,
-      });
-    });
+          message: `Get Data Pengajuan SKM Success`,
+          statusCode: 200,
+          results: getData,
+        });
+        console.log(req.idUser);
+        console.log(getData);
+    }
+   
   },
   riwayatId: (req, res) => {
-    PengajuanSKM.find({ _id: req.params }, (err, result) => {
+    PengajuanSKM.findById( req.params.id , (err, result) => {
       if (err) {
         res.send({
           message: `Failed to get data`,
@@ -88,7 +110,7 @@ module.exports = {
         });
       }
       res.send({
-        message: `Get Data Pengajuan SKM Success`,
+        message: `Get Data Riwayat Success`,
         statusCode: 200,
         results: result,
       });

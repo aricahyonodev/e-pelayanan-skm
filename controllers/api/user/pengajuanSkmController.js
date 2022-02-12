@@ -48,7 +48,8 @@ module.exports = {
       });
     });
   },
-  menungguVerifikasi: (req, res) => {
+  menungguVerifikasi: async (req, res) => {
+
     PengajuanSKM.find(
       { userId: req.idUser, status: "MENUNGGU VERIFIKASI" },
       (err, result) => {

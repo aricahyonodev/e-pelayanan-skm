@@ -32,17 +32,17 @@
                     <div class="row mt-3">
                        <div class="col-5 offset-1 list-text-violet">
                          <span>SCAN KARTU KELUARGA</span>
-                         <img src="/images/sistem/logo.png" class="img-fluid" alt="...">
+                         <img id="scanKartuKeluarga" src="/images/sistem/logo.png" class="img-fluid" alt="...">
                        </div> 
                        <div class="col-5 offset-1 list-text-violet">
                            <span>SCAN KARTU KELUARGA</span>
-                           <img src="/images/sistem/logo.png" class="img-fluid" alt="...">
+                           <img id="scanSuratPendukung" class="img-fluid" alt="...">
                        </div>
                     </div>
 
                         <div class="row mt-4 ">
                            <div class="col-3 offset-9">
-                               <a href="/home/riwayat" class="text-decoration-none">
+                               <a  class="text-decoration-none" href="/home/riwayat">
                                <div class="d-grid gap-2 my-3">
                                          <button class="btn btn-danger" id="tolakPengajuan">KEMBALI</button>
                                         </div>
@@ -60,42 +60,25 @@
 </div>
 
 <script>
-    const urlId =window.location.href.replace("http://127.0.0.1:3000/home/pengajuan/","")
+    const urlId =window.location.href.replace("http://127.0.0.1:3000/home/riwayat/","")
     const getData = async()=>{
         const config = {
           headers: {
              'Authorization': `Bearer ${await localStorage.getItem('token')}`,
             },
       }
-        const getDetail = await fetch(`/api/admin/pengajuan/${urlId}`, config)
+        const getDetail = await fetch(`/api/admin/riwayat/${urlId}`, config)
         const {results} = await getDetail.json()
         console.log(results);
+        console.log(urlId);
         document.getElementById("nikPemohon").innerHTML = `: ${results.nikPemohon}`; 
         document.getElementById("nikKepalaKeuarga").innerHTML = `: ${results.nikKepalaKeluarga}`; 
         document.getElementById("noHp").innerHTML = `: ${results.noHp}`; 
         document.getElementById("keperluan").innerHTML = `: ${results.keperluan}`; 
+        document.getElementById("scanKartuKeluarga").src =  `/images/skm/${results.scanKartuKeluarga}`;
+        document.getElementById("scanSuratPendukung").src =  `/images/skm/${results.scanSuratPendukung}`;
     }
 
-    document.getElementById("terimaPengajuan").addEventListener("click", async()=>{
-        const config = {
-                headers: {
-                    'Authorization': `Bearer ${await localStorage.getItem('token')}`,
-                    },
-            }
-        const getDetail = await fetch(`/api/admin/pengajuan/${urlId}/terima`, config)
-        const {message} = await getDetail.json()
-        window.location.href = "/home/pengajuan";
-    })
-    document.getElementById("tolakPengajuan").addEventListener("click", async()=>{
-        const config = {
-                headers: {
-                    'Authorization': `Bearer ${await localStorage.getItem('token')}`,
-                    },
-            }
-        const getDetail = await fetch(`/api/admin/pengajuan/${urlId}/tolak`, config)
-        const {message} = await getDetail.json()
-        window.location.href = "/home/pengajuan";
-    })
     getData();
 </script>
 <%- include("../template/footer") %> 

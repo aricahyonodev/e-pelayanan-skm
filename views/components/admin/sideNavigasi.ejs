@@ -6,11 +6,11 @@
         </ul>
 </div>
 <script>
-      const checkUrl = window.location.href.replace("http://127.0.0.1:3000/home/","");
       const pengajuan = document.getElementById("pengajuan")
       const riwayat = document.getElementById("riwayat")
-
-      switch (checkUrl) {
+      const riwayatPattern = /riwayat/g;
+      const checkUrl = window.location.href.match(riwayatPattern)
+      switch (checkUrl[0]) {
           case "riwayat":
                 riwayat.classList.add("bgd-violet")
                 pengajuan.classList.remove("bgd-violet")
