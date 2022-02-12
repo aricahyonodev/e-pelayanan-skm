@@ -7,7 +7,7 @@ module.exports = {
   login: (req, res) => {
     const { email, password } = req.body;
     console.log(req.body);
-    User.findOne({ email }, (err, results) => {
+    User.findOne({ email, status : "aktif" }, (err, results) => {
       if (err) {
         res.send({
           message: `Failed to get data`,

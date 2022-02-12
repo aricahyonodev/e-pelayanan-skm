@@ -1,0 +1,24 @@
+<div class="col-3 position-fixed bg-white px-0 vh-100">
+        <ul class="list-group  list-group-flush text-center side-nav">
+            <li class="list-group-item text-start ps-4 ">Ari (Admin)</li>
+            <a class="text-decoration-none " href="/home/list-admin" ><li id="listAdmin" class="list-group-item py-4 side-nav-list bgd-violet">List Admin</li></a>
+            <a class="text-decoration-none" href="/home/list-user"><li id="listUser" class="list-group-item  py-4 side-nav-list">List User</li></a>
+        </ul>
+</div>
+<script>
+      const checkUrl = window.location.href.replace("http://127.0.0.1:3000/home/","");
+      const listAdmin = document.getElementById("listAdmin")
+      const listUser = document.getElementById("listUser")
+console.log(checkUrl);
+      switch (checkUrl) {
+          case "list-user":
+                listUser.classList.add("bgd-violet")
+                listAdmin.classList.remove("bgd-violet")
+              break;
+      
+          default:
+              listAdmin.classList.add("bgd-violet")
+              listUser.classList.remove("bgd-violet")
+              break;
+      }
+</script>

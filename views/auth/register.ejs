@@ -2,23 +2,31 @@
 <div class="row justify-content-center align-items-center vh-100">
     <div class="col-4">
         <%- include("../components/imgLogo") %> 
-         <div class="card-default">
+        <div class="card-default">
+             <div class="mt-3 alert alert-success text-center d-none" role="alert" id="notif">
+                 Pendaftaran User Berhasil
+                 <div class="text-danger "> dalam 3 detik anda akan diredirect ke halaman login</div> 
+             </div>
                 <%- include("../components/titleCard", {title: "pendaftaran"}) %> 
                 <div class="mb-4  position-relative">
                     <input type="text" class="form-control ps-5" id="fullname" placeholder="Nama Lengkap">
                    <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
+                   <div class=" text-danger d-none" id="namaLengkapError">Nama Lengkap Wajib Diisi</div>
                 </div>
                 <div class="mb-4  position-relative">
                     <input type="email" class="form-control ps-5 " id="email" placeholder="Email">
                     <span class="iconify position-absolute input-form-icon" data-icon="ic:baseline-email"data-width="28" data-height="28"  style="color: #828282;"></span>
+                     <div class=" text-danger d-none" id="emailError">Email Wajib Diisi</div>
                 </div>
                 <div class="mb-4  position-relative">
                     <input type="password" class="form-control ps-5 " id="password" placeholder="Password">
                     <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-lock-open" style="color: #828282;" data-width="28" data-height="28"></span>
-                </div>
-                <div class="mb-4  position-relative">
-                    <input type="password" class="form-control ps-5 " id="confirmPassword" placeholder="Ketik Ulang Password">
-                    <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-lock-open" style="color: #828282;" data-width="28" data-height="28"></span>
+                     <div class=" text-danger d-none" id="passwordError">Password Wajib Diisi</div>
+                    </div>
+                    <div class="mb-4  position-relative">
+                        <input type="password" class="form-control ps-5 " id="confirmPassword" placeholder="Ketik Ulang Password">
+                        <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-lock-open" style="color: #828282;" data-width="28" data-height="28"></span>
+                        <div class=" text-danger d-none" id="confirmPasswordError">Konfirmasi Password Tidak Sama</div>
                 </div>
                 <div class="d-grid gap-2 my-3">
                     <button type="button" id="submit" class="btn btn-primary bgd-blue default-btn">Daftar</button>
@@ -27,15 +35,46 @@
     </div>
 </div>
 
-<script>
+<script> 
 
-    document.getElementById("submit").addEventListener("click", async ()=>{
         const fullname = document.getElementById("fullname");
         const email = document.getElementById("email");
         const password = document.getElementById("password");
         const confirmPassword = document.getElementById("confirmPassword");
+        const namaLengkapError = document.getElementById("namaLengkapError");
+        const emailError = document.getElementById("emailError");
+        const passwordError = document.getElementById("passwordError");
+        const confirmPasswordError = document.getElementById("confirmPasswordError");
+        const notif = document.getElementById("notif");
 
-        const dataUser = {
+        
+        document.getElementById("submit").addEventListener("click", async ()=>{
+            
+         
+        namaLengkapError.classList.add("d-none")
+        emailError.classList.add("d-none")
+        passwordError.classList.add("d-none")
+        confirmPasswordError.classList.add("d-none")
+            let error = false;
+        if(fullname.value === ""){
+            namaLengkapError.classList.remove("d-none")
+            error = true;
+        }
+        if(email.value === ""){
+            emailError.classList.remove("d-none")
+            error = true;
+        }
+        if(password.value === ""){
+            passwordError.classList.remove("d-none")
+            error = true;
+        }
+        if( password.value !== confirmPassword.value){
+            confirmPasswordError.classList.remove("d-none")
+            error = true;
+        }
+        
+        if(!error){
+            const dataUser = {
             fullname : fullname.value,
             email : email.value,
             password : password.value,
@@ -53,10 +92,21 @@
                 email.value = ""
                 password.value = ""
                 confirmPassword.value = ""
+
+                notif.classList.remove("d-none")
+                setTimeout(() => {
+                    notif.classList.add("d-none")
+                    window.location.href = "/";
+                }, 5000);
             }
         } catch (error) {
             console.log(error);
         }
+        
+        }else{
+            console.log("masih ada error");
+        }
+        
 
     })
    

@@ -2,9 +2,12 @@
 <div class="row justify-content-center align-items-center vh-100">
     <div class="col-4">
         <%- include("../components/imgLogo") %> 
-         <div class="card-default">
-                <%- include("../components/titleCard", {title: "e-pelayanan"}) %> 
-                 <div class="mb-4  position-relative">
+        <div class="card-default">
+            <%- include("../components/titleCard", {title: "e-pelayanan"}) %> 
+            <div class="alert alert-danger text-center d-none" role="alert" id="notif">
+              Email & Password Salah
+           </div>
+            <div class="mb-4  position-relative">
                     <input type="email" class="form-control ps-5 " id="email" placeholder="Email">
                     <span class="iconify position-absolute input-form-icon" data-icon="ic:baseline-email"data-width="28" data-height="28"  style="color: #828282;"></span>
                 </div>
@@ -20,7 +23,12 @@
 </div>
 
 <script>
-  
+    const loadError = () =>{
+                notif.classList.remove('d-none')
+                setTimeout(() => {
+                    notif.classList.add('d-none')
+                }, 3000);
+    }
     localStorage.clear()
     document.getElementById("btnSubmit").addEventListener("click", async ()=>{
     const email = document.getElementById("email");
@@ -48,11 +56,17 @@
                 if(results.level === "admin"){
                     window.location.href = "/home/pengajuan";
                 }
+                if(results.level === "super admin"){
+                    window.location.href = "/home/list-admin";
+                }
                 console.log(results);
                 
+            }else{
+                const notif = document.getElementById("notif");
+               loadError()
             }
         } catch (error) {
-            console.log(error);
+            loadError()
         }
     })
 </script>

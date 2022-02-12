@@ -1,7 +1,24 @@
 <div class="col-3 position-fixed bg-white px-0 vh-100">
-        <ul class="list-group mt-4 list-group-flush text-center">
-            <li class="list-group-item ">Ari (Admin)</li>
-            <a class="text-decoration-none" href="/home/pengajuan"><li class="list-group-item">PENGAJUAN</li></a>
-            <a class="text-decoration-none" href="/home/riwayat"><li class="list-group-item bgd-violet">RIWAYAT</li>        </a>
+        <ul class="list-group  list-group-flush text-center side-nav">
+            <li class="list-group-item text-start ps-4 ">Ari (Admin)</li>
+            <a class="text-decoration-none " href="/home/pengajuan" ><li id="pengajuan" class="list-group-item py-4 side-nav-list bgd-violet">PENGAJUAN</li></a>
+            <a class="text-decoration-none" href="/home/riwayat"><li id="riwayat" class="list-group-item  py-4 side-nav-list">RIWAYAT</li>        </a>
         </ul>
 </div>
+<script>
+      const checkUrl = window.location.href.replace("http://127.0.0.1:3000/home/","");
+      const pengajuan = document.getElementById("pengajuan")
+      const riwayat = document.getElementById("riwayat")
+
+      switch (checkUrl) {
+          case "riwayat":
+                riwayat.classList.add("bgd-violet")
+                pengajuan.classList.remove("bgd-violet")
+              break;
+      
+          default:
+              pengajuan.classList.add("bgd-violet")
+              riwayat.classList.remove("bgd-violet")
+              break;
+      }
+</script>

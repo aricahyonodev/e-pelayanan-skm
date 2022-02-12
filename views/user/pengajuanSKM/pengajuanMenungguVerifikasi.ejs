@@ -4,7 +4,7 @@
     <div class="row justify-content-center align-items-center h-100">
     <div class="col-11">
          <div class="card-default mb-5">
-
+          
                 <!-- Title -->
                 <%- include("../../components/titleCard", {title: "PELAYANAN SURAT KETERANGAN MISKIN"}) %> 
                 
@@ -37,6 +37,7 @@
      const config = {
           headers: {
              'Authorization': `Bearer ${await localStorage.getItem('token')}`,
+             'Content-Type': 'application/json'
             },
       }
       const getDatatPengajuanSMK = await fetch('/api/pengajuan-skm/menunggu-verifikasi', config) 
@@ -44,10 +45,9 @@
 
       const tableRow = document.getElementById("tableRow")
       if(results.length === 0){
-          tableRow.innerHTML += `
-                  <tr>
-                    <td colspan="4">Belum ada data</td>
-                  </tr>`;
+        tableRow.innerHTML = `
+          <%- include("../../components/tableEmpty.ejs") %> 
+                  `;
       }else{
       results.map((dt, i)=>{
         tableRow.innerHTML += `

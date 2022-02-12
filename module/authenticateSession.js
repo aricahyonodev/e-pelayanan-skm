@@ -6,6 +6,9 @@ module.exports = (req, res, next) => {
     if(req.session.levelUser === "admin"){
       return next();
     }
+    if(req.session.levelUser === "super admin"){
+      return next();
+    }
     res.redirect("/")
     
   } catch (err) {

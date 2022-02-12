@@ -4,10 +4,9 @@
     <div class="row justify-content-center align-items-center h-100">
     <div class="col-11">
          <div class="card-default mb-5">
-
-                <!-- Title -->
-                <%- include("../../components/titleCard", {title: "PELAYANAN SURAT KETERANGAN MISKIN"}) %> 
-                
+            <!-- Title -->
+            <%- include("../../components/titleCard", {title: "PELAYANAN SURAT KETERANGAN MISKIN"}) %> 
+            
                 <!-- Navigasi Card -->
                 <%- include("../../components/user/cardNavigasi") %> 
 
@@ -17,6 +16,7 @@
                    <div class="position-relative">
                         <input type="number" class="form-control ps-5 " id="nikPemohon" placeholder="NIK">
                         <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
+                        <div class=" text-danger d-none" id="nikPemohonError">Nik Pemohon Wajib Diisi</div>
                    </div>
                 </div>
                  <div class="mb-4  ">
@@ -24,16 +24,19 @@
                    <div class="position-relative">
                         <input type="number" class="form-control ps-5 " id="nikKepalaKeluarga" placeholder="NIK">
                         <span class="iconify position-absolute input-form-icon" data-icon="bx:bxs-user" style="color: #828282;" data-width="28" data-height="28"></span>
+                        <div class=" text-danger d-none" id="nikKepalaKeluargaError">Nik Kepala keluarga Wajib Diisi</div>
                    </div>
                 </div>
                  <div class="mb-4  ">
-                    <label for="exampleFormControlInput1" class="form-label text-label-form">SCAN KARTU KELUARGA <span class="text-child-label">( PDF / FOTO ) - Max. 2MB</span></label>
-                    <input type="file" class="form-control " id="scanKartuKeluarga" placeholder="Email">
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">SCAN KARTU KELUARGA <span class="text-child-label">( FOTO FORMAT .JPG ) - Max. 2MB</span></label>
+                    <input type="file" class="form-control" id="scanKartuKeluarga" placeholder="Email">
+                    <div class=" text-danger d-none" id="scanKartuKeluargaError">Scan Kartu Keluarga Wajib Diisi</div>
+                    <div class=" text-danger d-none" id="formatKartuKeluargaError">Format Foto Wajib .JPG</div>
                 </div>
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">KEPERLUAN SKM</label>
                    <div class="form-check mb-3 ms-5">
-                      <input class="form-check-input" type="radio" value="PENDIDIKAN" name="keperluanSkm" id="flexRadioDefault1">
+                      <input class="form-check-input" type="radio" value="PENDIDIKAN" checked name="keperluanSkm" id="flexRadioDefault1">
                         <label class="form-check-label text-violet" for="flexRadioDefault1">
                            PENDIDIKAN
                    </label>
@@ -57,31 +60,105 @@
                    <div class="position-relative">
                         <input type="number" class="form-control ps-5 " id="noHp" placeholder="">
                    <span class="iconify position-absolute input-form-icon" data-icon="fluent:call-24-filled" style="color: #828282;" data-width="28" data-height="28"></span>
+                        <div class=" text-danger d-none" id="noHpError">Nik Pemohon Wajib Diisi</div>
                    </div>
                 </div>
                  <div class="mb-4  ">
-                    <label for="exampleFormControlInput1" class="form-label text-label-form">SCAN SURAT DARI INSTANSI TERKAIT YANG MEMPERSYARATKAN PENERBITAN SKM <span class="text-child-label">( PDF / FOTO ) - Max. 2MB</span></label>
+                    <label for="exampleFormControlInput1" class="form-label text-label-form">SCAN SURAT DARI INSTANSI TERKAIT YANG MEMPERSYARATKAN PENERBITAN SKM <span class="text-child-label">( FOTO FORMAT .JPG ) - Max. 2MB</span></label>
                     <input type="file" class="form-control " id="scanSuratPendukung" placeholder="Email">
+                     <div class=" text-danger d-none" id="scanSuratPendukungError">Scan Surat Pendukung Wajib Diisi</div>
+                     <div class=" text-danger d-none" id="formatSuratPendukungError">Format Foto Wajib .JPG</div>
                    </div>
 
-                    <div class="d-grid gap-2 my-4">
-                    <button type="submit" id="submitFormPengajuan" class="btn  bgd-green default-btn">Kirim</button>
-                </div>
+                   <div class="d-grid gap-2 my-4">
+                      <button type="submit" id="submitFormPengajuan" class="btn  bgd-green default-btn">Kirim</button>
+                     </div>
+                     <div class="alert alert-success text-center d-none" role="alert" id="notif">
+                         Pengajuan Berhasil Di Upload
+                      </div>
+                     <div class="alert alert-danger text-center d-none" role="alert" id="notifError">
+                         Semua Data Wajib Terisi
+                      </div>
                 </div>
     </div>
 </div>
 </div>
 
 <script>
-   document.getElementById("submitFormPengajuan").addEventListener("click", async ()=>{
+ const loadError = () =>{
+               notif.classList.remove('d-none')
+               setTimeout(() => {
+                  notif.classList.add('d-none')
+                  window.location.href = "/pengajuan-skm/menunggu-verifikasi";
+               }, 3000);
+            }
       const nikPemohon = document.getElementById("nikPemohon");
       const nikKepalaKeluarga = document.getElementById("nikKepalaKeluarga");
-      const scanKartuKeluarga = document.getElementById("scanKartuKeluarga");
       const keperluanSkm = document.querySelector('input[name="keperluanSkm"]:checked');
       const noHp = document.getElementById("noHp");
+      const scanKartuKeluarga = document.getElementById("scanKartuKeluarga");
       const scanSuratPendukung = document.getElementById("scanSuratPendukung");
+      const scanKartuKeluargaError = document.getElementById("scanKartuKeluargaError");
+      const scanSuratPendukungError = document.getElementById("scanSuratPendukungError");
+      const formatKartuKeluargaError = document.getElementById("formatKartuKeluargaError");
+      const formatSuratPendukungError = document.getElementById("formatSuratPendukungError");
+      
 
-      const formData = new FormData()
+      const notifError = document.getElementById("notifError");
+      const nikPemohonError = document.getElementById("nikPemohonError");
+      const nikKepalaKeluargaError = document.getElementById("nikKepalaKeluargaError");
+      const noHpError = document.getElementById("noHpError");
+
+   
+
+      document.getElementById("submitFormPengajuan").addEventListener("click", async ()=>{
+
+      nikPemohonError.classList.add("d-none")
+      nikKepalaKeluargaError.classList.add("d-none")
+      noHpError.classList.add("d-none")
+      notifError.classList.add("d-none")
+      scanKartuKeluargaError.classList.add("d-none")
+      scanSuratPendukungError.classList.add("d-none")
+      formatKartuKeluargaError.classList.add("d-none")
+      formatSuratPendukungError.classList.add("d-none")
+
+
+         let error = false;
+        
+       if(nikPemohon.value === ""){
+            nikPemohonError.classList.remove("d-none")
+            error = true;
+        }
+        if(nikKepalaKeluarga.value === ""){
+            nikKepalaKeluargaError.classList.remove("d-none")
+            error = true;
+        }
+        if(noHp.value === ""){
+            noHpError.classList.remove("d-none")
+            error = true;
+        }
+         if(!scanKartuKeluarga.files[0]){
+            scanKartuKeluargaError.classList.remove("d-none")
+            error = true;
+        }
+         if(!scanSuratPendukung.files[0]){
+            scanSuratPendukungError.classList.remove("d-none")
+            error = true;
+         }
+         
+         if ( scanKartuKeluarga.files[0].type !==  "image/jpeg") {
+            error = true;
+           formatKartuKeluargaError.classList.remove("d-none")
+        }
+         if ( scanSuratPendukung.files[0].type !==  "image/jpeg") {
+            formatSuratPendukungError.classList.remove("d-none")
+            error = true;
+        }
+
+       
+        
+        if(!error){
+  const formData = new FormData()
       formData.append('nikPemohon', nikPemohon.value);
       formData.append('nikKepalaKeluarga', nikKepalaKeluarga.value);
       formData.append('keperluanSkm', keperluanSkm.value);
@@ -106,8 +183,14 @@
          noHp.value = ""
          scanKartuKeluarga.value = ""
          scanSuratPendukung.value = ""
-         console.log(message);
-      }
+         loadError();
+         }
+        }else{
+             notifError.classList.remove("d-none")
+            error = true;
+        }
+
+    
    })
 </script>
 <%- include("../../template/footer") %> 

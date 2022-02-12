@@ -5,6 +5,7 @@ module.exports = (req, res, next) => {
     switch (req.session.levelUser) {
       case "user": return res.redirect("/pengajuan-skm/form");
       case "admin": return res.redirect("/home/pengajuan");
+      case "super admin": return res.redirect("/home/list-admin");
       default:
         return next();
     }

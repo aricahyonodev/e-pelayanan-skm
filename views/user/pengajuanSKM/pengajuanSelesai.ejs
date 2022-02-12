@@ -27,7 +27,7 @@
 </table>
                 </div>
                 
-               
+            
                 
     </div>
 </div>
@@ -44,10 +44,9 @@
       const {results} = await getDatatPengajuanSMK.json();
       const tableRow = document.getElementById("tableRow")
       if(results.length === 0){
-          tableRow.innerHTML += `
-                  <tr>
-                    <td colspan="4">Belum ada data</td>
-                  </tr>`;
+         tableRow.innerHTML = `
+          <%- include("../../components/tableEmpty.ejs") %> 
+                  `;
       }else{
         results.map((dt, i)=>{
            tableRow.innerHTML += `
@@ -60,7 +59,11 @@
                       <td><div class="tb-data-smBold">${dt.keperluan}</div></td>
                       <td>
                         <div class="tb-data-smBold">[${dt.status}]</div>
-                       <div class="tb-data-reguler"><button type="button" class="btn btn-outline-success btn-sm"><span class="iconify" data-icon="fa-solid:download" style="color: #2dce89;" data-width="18" data-height="18"></span> UNDUH SKM</button></div>
+                       <div class="tb-data-reguler">
+                        <a target="_blank" href="/images/skm/Visual_Studio_Code_Untuk_Pemula.pdf">
+                          <button type="button" class="btn btn-outline-success btn-sm"><span class="iconify" data-icon="fa-solid:download" style="color: #2dce89;" data-width="18" data-height="18"></span> UNDUH SKM</button>
+                        </a>   
+                        </div>
                       </td>
                     </tr>`;
         })

@@ -1,0 +1,221 @@
+<%- include("../template/header") %> 
+<%- include("../components/admin/navigasi") %> 
+<div class="row   ">
+   
+        <%- include("../components/superAdmin/sideNavigasi") %> 
+        
+    <div class="row" >
+      <div class="mt-4 col-9 offset-3" >
+          <div  class="row " >
+            <div id="notif" class=" col-9 position-fixed px-5 d-none"  style="z-index: 2000;" >
+              <div class="alert alert-danger text-center pe-5" role="alert" >
+                           Data Berhasil di Hapus
+               </div>
+            </div>
+          </div>
+          <div  class="row " >
+            <div id="notif-update" class=" col-9 position-fixed px-5 d-none"  style="z-index: 2000;" >
+              <div class="alert alert-success text-center pe-5" role="alert" >
+                           Data Berhasil di Update
+               </div>
+            </div>
+          </div>
+            <div class="row justify-content-center ">
+                <div class="col-11">
+                    <div class="card">
+                        <div class="card-body">
+                                <!-- Title -->
+                <%- include("../components/titleCard", {title: "Daftar User"}) %> 
+                           <!-- Content -->
+                    <table class="table text-center table-default">
+                      <thead>
+                        <tr>
+                          <th scope="col text-start">NO</th>
+                          <th scope="col">Nama</th>
+                          <th scope="col">STATUS</th>
+                          <th scope="col">AKSI</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tableRow">
+                        
+                      </tbody>
+                    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+  const getData  = async () =>{
+     const config = {
+          headers: {
+             'Authorization': `Bearer ${await localStorage.getItem('token')}`,
+            },
+      }
+      const getDatatPengajuanSMK = await fetch('/api/super-admin/list-user', config) 
+      const {results} = await getDatatPengajuanSMK.json();
+      console.log(results);
+      const tableRow = document.getElementById("tableRow")
+      tableRow.innerHTML = ""
+      if(results.length === 0){
+          tableRow.innerHTML += `
+                  <tr>
+                    <td colspan="4">Belum ada data</td>
+                  </tr>`;
+      }else{
+        results.map((dt, i)=>{
+          
+           tableRow.innerHTML += `
+                    <tr>
+                      <th scope="row">${1+i}</th>
+                      <td>
+                        <div class="tb-data-smBold" name=""
+                         id="idUser">${dt.fullname}</div>
+                      </td>
+                      <td><div class="tb-data-smBold text-uppercase">${dt.status}</div></td>
+                      <td>
+                       <div class="row">
+                                <div class="col pe-1">
+                                    <div class="d-grid gap-2">
+                                      <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal${dt._id}">
+                                        Ubah
+                                        </button>
+                                     
+                                    </div>
+                                </div>
+                                <div class="col pl-1">
+                                    <div class="d-grid gap-2">
+                                      <button class="btn btn-danger" type="button" id="hapus${dt._id}">Hapus</button>
+                                    </div>
+                                </div>
+                              </div>
+                      </td>
+                    </tr>
+                    
+                    <!-- Modal -->
+<div class="modal fade mt-5" id="exampleModal${dt._id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <div class="row justify-content-center text-start">
+          <div class="col-11">
+          <div class="row mb-2 align-items-center list-text-violet">
+                      <div class="col-5 offset-1">Nama</div>
+                      <div class="col-6" id="nama${dt._id}">: ${dt.fullname}</div>
+                   </div>
+                   <div class="row align-items-center mb-2 list-text-violet">
+                        <div class="col-5 offset-1">Status</div>
+                        <div class="col-6" >
+                          <select class="form-select" id="status${dt._id}" aria-label="Default select example">
+                            <option value="aktif" ${dt.status === "aktif" ? "selected" : ""} >AKTIF</option>
+                            <option value="non aktif" ${dt.status === "non aktif" ? "selected" : ""} >NON AKTIF</option>
+                          </select>
+                          </div>
+                    </div>
+                    <div class="row align-items-center mb-2 list-text-violet">
+                        <div class="col-5 offset-1">Level User</div>
+                        <div class="col-6" id="nikKepalaKeuarga">
+                          <select class="form-select" id="levelUser${dt._id}"  aria-label="Default select example">
+                            <option value="user" ${dt.level === "user" ? "selected" : ""}>USER</option>
+                            <option value="admin" ${dt.level === "admin" ? "selected" : ""}>ADMIN</option>
+                          </select>
+                          </div>
+                    </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary modal-btn-simpan" id="simpan${dt._id}">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+                    `;
+
+        })
+      }
+       
+      
+
+      loadHapus(document.querySelectorAll('.btn-danger'))
+      loadSimpan(document.querySelectorAll('.modal-btn-simpan'))
+  }
+
+  const loadSimpan = async (data) => {
+    for (let i = 0; i < data.length; i++) {
+      document.getElementById(data[i].id).addEventListener('click', async ()=> {
+        let id = data[i].id.replace("simpan","")
+        console.log('ad');
+         const selectStatus = document.getElementById(`status${id}`);
+         const selectStatusvalue = selectStatus.options[selectStatus.selectedIndex].value;
+         console.log(selectStatusvalue);
+         const selectLevelUser = document.getElementById(`levelUser${id}`);
+         const levelUserValue = selectLevelUser.options[selectLevelUser.selectedIndex].value;
+         console.log(levelUserValue);
+            const config = {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${await localStorage.getItem('token')}`,
+              },
+           method: "put",
+           body: JSON.stringify({
+             level : levelUserValue,
+             status : selectStatusvalue,
+           })
+        }
+        const getDatatPengajuanSMK = await fetch(`/api/super-admin/user/${id}`, config) 
+        const {message} = await getDatatPengajuanSMK.json();
+        console.log(message);
+        if(message === "Update User Success"){
+        const myModalEl = document.getElementById(`exampleModal${id}`)
+        const modal = bootstrap.Modal.getInstance(myModalEl)
+          modal.hide()
+           const notigf = document.getElementById("notif-update")
+          notigf.classList.remove("d-none")
+          await getData();
+          setTimeout(()=>notigf.classList.add("d-none"), 3000)
+        }
+        
+         })
+      }
+  }
+
+  const loadHapus = async (data) =>{
+    for (let i = 0; i < data.length; i++) {
+        let id = data[i].id
+        document.getElementById(id).addEventListener('click', async ()=> {
+        const config = {
+            headers: {
+              'Authorization': `Bearer ${await localStorage.getItem('token')}`,
+              },
+            method: "delete",
+        }
+        const getDatatPengajuanSMK = await fetch(`/api/super-admin/user/${id.replace("hapus","")}`, config) 
+        const {message} = await getDatatPengajuanSMK.json();
+        console.log(message);
+        if (message === "Delete User Success") {
+          const notigf = document.getElementById("notif")
+          notigf.classList.remove("d-none")
+          await getData();
+          setTimeout(()=>notigf.classList.add("d-none"), 3000)
+        }
+    })
+    
+  }
+  }
+  getData();
+  
+
+  
+</script>
+<%- include("../template/footer") %> 

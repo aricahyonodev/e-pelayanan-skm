@@ -1,11 +1,11 @@
 <div class="row justify-content-center align-items-center mb-4">
     <div class="col p-1 ">
         <a href="/pengajuan-skm/form" class="text-decoration-none">
-        <div class="card card-nav-default card-nav-active">
+        <div class="card card-nav-default card-nav-active" id="pengajuan">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-5 text-end px-0 pe-1">
-                      <span class="iconify" data-icon="ant-design:file-add-twotone" class="icon-nav-active" data-width="28" data-height="28"></span>    
+                      <span class="iconify" id="pengajuanIcon" data-icon="ant-design:file-add-twotone" class="icon-nav-active" data-width="28" data-height="28"></span>    
                     </div>
                     <div class="col-5 ps-0">
                         <span>Pengajuan</span>
@@ -16,12 +16,12 @@
         </a>
     </div>
     <div class="col p-1 ">
-        <a href="/pengajuan-skm/menunggu-verifikasi" class="text-decoration-none">
-        <div class="card card-nav-default">
+        <a href="/pengajuan-skm/menunggu-verifikasi" class="text-decoration-none" >
+        <div class="card card-nav-default" id="menungguVerifikasi">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-5 text-end px-0 pe-1">
-                        <span class="iconify" data-icon="ic:sharp-access-time" style="color: #5E72E4;" data-width="28" data-height="28"></span>
+                        <span class="iconify" data-icon="ic:sharp-access-time" style="color: #5E72E4;" id="menungguVerifikasiIcon" data-width="28" data-height="28"></span>
                     </div>
                     <div class="col-5 ps-0">
                         <span>Menunggu</span>
@@ -32,12 +32,12 @@
         </a>
     </div>
     <div class="col p-1 ">
-            <a href="/pengajuan-skm/selesai" class="text-decoration-none">
-        <div class="card card-nav-default">
+            <a href="/pengajuan-skm/selesai" class="text-decoration-none" >
+        <div class="card card-nav-default" id="selesai">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-5 text-end px-0 pe-1">
-                        <span class="iconify" data-icon="clarity:success-standard-line" style="color: #5E72E4;" data-width="28" data-height="28"></span>
+                        <span class="iconify" data-icon="clarity:success-standard-line" id="selesaiIcon" style="color: #5E72E4;" data-width="28" data-height="28"></span>
                     </div>
                     <div class="col-5 ps-0">
                         <span>Selesai</span>
@@ -48,3 +48,37 @@
     </a>
     </div>
 </div>
+
+<script>
+    const checkUrl = window.location.href.replace("http://127.0.0.1:3000/pengajuan-skm/","");
+    const menungguVerifikasi = document.getElementById("menungguVerifikasi")
+    const menungguVerifikasiIcon =document.getElementById("menungguVerifikasiIcon")
+    const selesai = document.getElementById("selesai")
+    const selesaiIcon = document.getElementById("selesaiIcon")
+    const pengajuan = document.getElementById("pengajuan")
+    const pengajuanIcon = document.getElementById("pengajuanIcon")
+
+    switch (checkUrl) {
+        case "menunggu-verifikasi":
+                menungguVerifikasi.classList.add("card-nav-active")
+                selesai.classList.remove("card-nav-active")
+                pengajuan.classList.remove("card-nav-active")
+
+                menungguVerifikasiIcon.style.color = "#FFFFFF"
+            break;
+    
+        case "selesai":
+                selesai.classList.add("card-nav-active")
+                menungguVerifikasi.classList.remove("card-nav-active")
+                pengajuan.classList.remove("card-nav-active")
+                selesaiIcon.style.color = "#FFFFFF"
+            break;
+    
+        default:
+                pengajuan.classList.add("card-nav-active")
+                selesai.classList.remove("card-nav-active")
+                menungguVerifikasi.classList.remove("card-nav-active")
+                pengajuanIcon.style.color = "#FFFFFF"
+            break;
+    }
+</script>
