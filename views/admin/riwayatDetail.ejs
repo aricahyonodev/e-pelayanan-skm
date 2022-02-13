@@ -32,11 +32,15 @@
                     <div class="row mt-3">
                        <div class="col-5 offset-1 list-text-violet">
                          <span>SCAN KARTU KELUARGA</span>
-                         <img id="scanKartuKeluarga" src="/images/sistem/logo.png" class="img-fluid" alt="...">
+                         <a id="scanKartuKeluargaLink" target="_blank" rel="noopener noreferrer">
+                             <img  id="scanKartuKeluarga" class="img-fluid" alt="...">
+                         </a>
                        </div> 
                        <div class="col-5 offset-1 list-text-violet">
-                           <span>SCAN KARTU KELUARGA</span>
-                           <img id="scanSuratPendukung" class="img-fluid" alt="...">
+                           <span>SCAN SURAT PENDUKUNG</span>
+                           <a id="scanSuratPendukungLink" target="_blank" rel="noopener noreferrer">
+                               <img id="scanSuratPendukung" class="img-fluid" alt="...">
+                           </a>
                        </div>
                     </div>
 
@@ -77,6 +81,8 @@
         document.getElementById("keperluan").innerHTML = `: ${results.keperluan}`; 
         document.getElementById("scanKartuKeluarga").src =  `/images/skm/${results.scanKartuKeluarga}`;
         document.getElementById("scanSuratPendukung").src =  `/images/skm/${results.scanSuratPendukung}`;
+        document.getElementById("scanKartuKeluargaLink").href =  `/images/skm/${results.scanKartuKeluarga}`;
+        document.getElementById("scanSuratPendukungLink").href =  `/images/skm/${results.scanKartuKeluarga}`;
     }
 
     getData();

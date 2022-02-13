@@ -32,14 +32,17 @@
                     <div class="row mt-3">
                        <div class="col-5 offset-1 list-text-violet">
                          <span>SCAN KARTU KELUARGA</span>
-                         <img  id="scanKartuKeluarga" src="/images/sistem/logo.png" class="img-fluid" alt="...">
+                         <a id="scanKartuKeluargaLink" target="_blank" rel="noopener noreferrer">
+                             <img  id="scanKartuKeluarga" class="img-fluid" alt="...">
+                         </a>
                        </div> 
                        <div class="col-5 offset-1 list-text-violet">
                            <span>SCAN SURAT PENDUKUNG</span>
-                           <img id="scanSuratPendukung" class="img-fluid" alt="...">
+                           <a id="scanSuratPendukungLink" target="_blank" rel="noopener noreferrer">
+                               <img id="scanSuratPendukung" class="img-fluid" alt="...">
+                           </a>
                        </div>
                     </div>
-
                         <div class="row mt-4 ">
                            <div class="col-4 offset-1">
                                <div class="d-grid gap-2 my-3">
@@ -52,7 +55,6 @@
                                 </div>
                            </div>
                         </div>
-
 
                         </div>
                     </div>
@@ -72,13 +74,14 @@
       }
         const getDetail = await fetch(`/api/admin/pengajuan/${urlId}`, config)
         const {results} = await getDetail.json()
-        console.log(results);
         document.getElementById("nikPemohon").innerHTML = `: ${results.nikPemohon}`; 
         document.getElementById("nikKepalaKeuarga").innerHTML = `: ${results.nikKepalaKeluarga}`; 
         document.getElementById("noHp").innerHTML = `: ${results.noHp}`; 
         document.getElementById("keperluan").innerHTML = `: ${results.keperluan}`;
         document.getElementById("scanKartuKeluarga").src =  `/images/skm/${results.scanKartuKeluarga}`;
         document.getElementById("scanSuratPendukung").src =  `/images/skm/${results.scanSuratPendukung}`;
+        document.getElementById("scanKartuKeluargaLink").href =  `/images/skm/${results.scanKartuKeluarga}`;
+        document.getElementById("scanSuratPendukungLink").href =  `/images/skm/${results.scanKartuKeluarga}`;
 
     }
 
