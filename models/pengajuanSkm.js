@@ -10,7 +10,7 @@ var Schema = new Mongoose.Schema({
   status: { type: String, default: "MENUNGGU VERIFIKASI" },
   scanSkm: { type: String, default: "" },
   userId: { type: String, default: "" },
-  adminId: { type: Mongoose.Schema.ObjectId, default: "" },
+  adminId: { type: Mongoose.Schema.ObjectId, default: null },
 });
 
 const User = Mongoose.model("pengajuan_skm", Schema);

@@ -11,6 +11,26 @@ module.exports = {
     let newNameSuratPendukung =
       RandomString(25) + scanSuratPendukung.mimetype.replace("image/", ".");
     let dirName = Path.join(__dirname, "../../../public");
+    
+
+    const pengajuanSKM = PengajuanSKM({
+      nikPemohon: req.body.nikPemohon,
+      nikKepalaKeluarga: req.body.nikKepalaKeluarga,
+      scanKartuKeluarga: newNameKK,
+      keperluan: req.body.keperluanSkm,
+      noHp: req.body.noHp,
+      scanSuratPendukung: newNameSuratPendukung,
+      userId: req.idUser,
+    });
+    console.log(pengajuanSKM);
+    pengajuanSKM.save((err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({
+          message: `Failed to get data`,
+          statusCode: 500,
+        });
+      }
     scanKartuKeluarga.mv(
       dirName + "/images/skm/" + newNameKK,
       function (err, result) {
@@ -25,23 +45,6 @@ module.exports = {
         if (result) console.log("success");
       }
     );
-
-    const pengajuanSKM = PengajuanSKM({
-      nikPemohon: req.body.nikPemohon,
-      nikKepalaKeluarga: req.body.nikKepalaKeluarga,
-      scanKartuKeluarga: newNameKK,
-      keperluan: req.body.keperluanSkm,
-      noHp: req.body.noHp,
-      scanSuratPendukung: newNameSuratPendukung,
-      userId: req.idUser,
-    });
-    pengajuanSKM.save((err, result) => {
-      if (err) {
-        res.send({
-          message: `Failed to get data`,
-          statusCode: 500,
-        });
-      }
       res.send({
         message: `Pengajuan SKM Success`,
         statusCode: 200,

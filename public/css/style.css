@@ -137,3 +137,6 @@ span.text-child-label{
     font-size: 18px;
     letter-spacing: 1.4px;
 }
+.z-index-alert{
+    z-index: 3000;
+}

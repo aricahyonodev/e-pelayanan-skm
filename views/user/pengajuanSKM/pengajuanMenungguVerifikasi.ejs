@@ -26,9 +26,19 @@
                         
                       </tbody>
                     </table>
+
+<div class="row mt-4">
+  <div class="col text-violet" id="totalTable"></div>
+  <div class="col text-end">
+    <button type="submit" class="btn btn-primary  rounded-circle fw-bold">1</button>
+    <button type="submit" class="btn btn-outline-primary rounded-circle fw-bold  ">2</button>
+    <button type="submit" class="btn btn-outline-primary rounded-circle fw-bold  ">3</button>
+  </div>
+</div>
                 </div>
     </div>
 </div>
+<%- include("../../components/user/footerUser") %> 
 </div>
 
 <script>
@@ -44,7 +54,9 @@
       const {results} = await getDatatPengajuanSMK.json();
 
       const tableRow = document.getElementById("tableRow")
-      if(results.length === 0){
+      const resultLenght = results.length;
+      document.getElementById("totalTable").innerText = `Showing ${resultLenght} to ${resultLenght} of ${resultLenght} entries`
+      if(resultLenght === 0){
         tableRow.innerHTML = `
           <%- include("../../components/tableEmpty.ejs") %> 
                   `;

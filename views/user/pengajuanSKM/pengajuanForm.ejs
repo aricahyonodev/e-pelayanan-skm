@@ -1,4 +1,11 @@
 <%- include("../../template/header") %> 
+
+<div class=" position-fixed top-0 left-0 w-100 d-none z-index-alert" id="notif" >
+   <div class="alert alert-success text-center  " role="alert" >
+         Pengajuan Berhasil Di Upload
+      </div>
+
+</div>
 <div class="container-user">
     <%- include("../../components/user/navigasi") %> 
     <div class="row justify-content-center align-items-center h-100">
@@ -9,7 +16,7 @@
             
                 <!-- Navigasi Card -->
                 <%- include("../../components/user/cardNavigasi") %> 
-
+                          
                 <!-- Form -->
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">NIK PEMOHON</label>
@@ -35,21 +42,21 @@
                 </div>
                  <div class="mb-4  ">
                     <label for="exampleFormControlInput1" class="form-label text-label-form">KEPERLUAN SKM</label>
-                   <div class="form-check mb-3 ms-5">
-                      <input class="form-check-input" type="radio" value="PENDIDIKAN" checked name="keperluanSkm" id="flexRadioDefault1">
-                        <label class="form-check-label text-violet" for="flexRadioDefault1">
+                   <div class="form-check mb-3 ms-5 " id="pendidikan">
+                      <input class="form-check-input keperluanSkm" type="radio" checked  value="PENDIDIKAN"  name="keperluanSkm" id="flexRadioDefault1">
+                        <label class="form-check-label text-violet keperluanSkm" for="flexRadioDefault1">
                            PENDIDIKAN
                    </label>
                    </div>
-                   <div class="form-check mb-3 ms-5">
-                      <input class="form-check-input" type="radio" value="BANTUAN HUKUM" name="keperluanSkm" id="flexRadioDefault2">
-                        <label class="form-check-label text-violet" for="flexRadioDefault2">
+                   <div class="form-check mb-3 ms-5  " >
+                      <input class="form-check-input bantuanHukum keperluanSkm" type="radio" value="BANTUAN HUKUM" id="flexRadioDefault2" name="keperluanSkm">
+                        <label class="form-check-label text-violet bantuanHukum keperluanSkm" for="flexRadioDefault2">
                            BANTUAN HUKUM (Perceraian, Rehabilitasi Napza, Sidang Waris, Isbat Nikah)
                    </label>
                    </div>
-                   <div class="form-check mb-3 ms-5">
-                      <input class="form-check-input" type="radio" value="DENDA AKTE KELAHIRAN" name="keperluanSkm" id="flexRadioDefault3">
-                        <label class="form-check-label text-violet" for="flexRadioDefault3">
+                   <div class="form-check mb-3 ms-5 "  >
+                      <input class="form-check-input keperluanSkm" type="radio" value="DENDA AKTE KELAHIRAN" name="keperluanSkm"  id="flexRadioDefault3" >
+                        <label class="form-check-label text-violet keperluanSkm" for="flexRadioDefault3">
                            DENDA AKTE KELAHIRAN
                    </label>
                    </div>
@@ -73,16 +80,20 @@
                    <div class="d-grid gap-2 my-4">
                       <button type="submit" id="submitFormPengajuan" class="btn  bgd-green default-btn">Kirim</button>
                      </div>
-                     <div class="alert alert-success text-center d-none" role="alert" id="notif">
-                         Pengajuan Berhasil Di Upload
-                      </div>
+                           
                      <div class="alert alert-danger text-center d-none" role="alert" id="notifError">
-                         Semua Data Wajib Terisi
+                        Semua Data Wajib Terisi
                       </div>
                 </div>
+
+
+
     </div>
+   </div>
+<%- include("../../components/user/footerUser") %> 
 </div>
-</div>
+
+
 
 <script>
  const loadError = () =>{
@@ -94,7 +105,6 @@
             }
       const nikPemohon = document.getElementById("nikPemohon");
       const nikKepalaKeluarga = document.getElementById("nikKepalaKeluarga");
-      const keperluanSkm = document.querySelector('input[name="keperluanSkm"]:checked');
       const noHp = document.getElementById("noHp");
       const scanKartuKeluarga = document.getElementById("scanKartuKeluarga");
       const scanSuratPendukung = document.getElementById("scanSuratPendukung");
@@ -103,16 +113,29 @@
       const formatKartuKeluargaError = document.getElementById("formatKartuKeluargaError");
       const formatSuratPendukungError = document.getElementById("formatSuratPendukungError");
       
+      
 
       const notifError = document.getElementById("notifError");
       const nikPemohonError = document.getElementById("nikPemohonError");
       const nikKepalaKeluargaError = document.getElementById("nikKepalaKeluargaError");
       const noHpError = document.getElementById("noHpError");
 
-   
+      const bantuanHukumChecked = document.getElementById("bantuanHukumChecked");
+      const pendidikanChecked = document.getElementById("pendidikanChecked");
+      const dendaChecked = document.getElementById("dendaChecked");
+      
+      let keperluanSkm = "PENDIDIKAN";
+      const keperluanSkmAll = document.querySelectorAll(`.keperluanSkm`);
+      for (let index = 0; index < keperluanSkmAll.length; index++) {
+            keperluanSkmAll[index].addEventListener("click", (e)=>{
+               const ujiData = e.target.value;
+               if(ujiData === "DENDA AKTE KELAHIRAN") keperluanSkm = e.target.value
+               if(ujiData === "BANTUAN HUKUM") keperluanSkm = e.target.value
+               if(ujiData === "PENDIDIKAN") keperluanSkm = e.target.value
+            })       
+      }
 
       document.getElementById("submitFormPengajuan").addEventListener("click", async ()=>{
-
       nikPemohonError.classList.add("d-none")
       nikKepalaKeluargaError.classList.add("d-none")
       noHpError.classList.add("d-none")
@@ -161,7 +184,7 @@
   const formData = new FormData()
       formData.append('nikPemohon', nikPemohon.value);
       formData.append('nikKepalaKeluarga', nikKepalaKeluarga.value);
-      formData.append('keperluanSkm', keperluanSkm.value);
+      formData.append('keperluanSkm', keperluanSkm);
       formData.append('noHp', noHp.value);
       formData.append('scanKartuKeluarga', scanKartuKeluarga.files[0]);
       formData.append('scanSuratPendukung', scanSuratPendukung.files[0]);
@@ -179,7 +202,6 @@
       if(message === "Pengajuan SKM Success"){
          nikPemohon.value =""
          nikPemohon.value =""
-         keperluanSkm.value =""
          noHp.value = ""
          scanKartuKeluarga.value = ""
          scanSuratPendukung.value = ""
