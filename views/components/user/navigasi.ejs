@@ -1,7 +1,38 @@
 <div class="row mt-4">
         <div class="col navigasi-user-brand">e-pelayanan</div>
         <div class="col text-end align-self-center navigasi-user-logout ">
-                <a class="text-decoration-none text-violet" href="/keluar">
+                <a class="text-decoration-none text-violet" href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal">
                         keluar <span class="iconify" data-icon="carbon:logout" style="color: #828282;" data-width="28" data-height="28"></span></div>
                 </a>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade mt-5 " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="row justify-content-center">
+   <div class="col-4 ">
+      <div class="modal-dialog">
+    <div class="modal-content border-0 ">
+      <div class="modal-body text-center pb-0 px-0">
+        <span class="iconify mt-4" data-icon="clarity:warning-standard-solid" style="color: #dc3545;" data-width="80" data-height="80"></span>
+        <p class="fs-5 my-1 text-danger  ">Apakah Anda Ingin Keluar?</p>
+       <div class="row mx-0 mt-4 ">
+            <div class="d-grid gap-2 col-6 mx-auto px-0">
+                <button type="button" class="btn btn-outline-danger rounded-0 px-0  text-uppercase fs-5" data-bs-dismiss="modal">Tidak</button>
+            </div>
+           <div class="d-grid gap-2 col-6 mx-auto px-0">
+                <button type="button" id="logout" class="btn btn-outline-danger rounded-0 px-0 py-2  text-uppercase fs-5">Ya</button>
+           </div>
+       </div>
+      </div>
+    </div>
+  </div>
+   </div>
+ </div>
+</div>
+
+<script>
+  document.getElementById("logout").addEventListener("click", function () {
+    window.location.href = "/keluar";
+  } )
+</script>
