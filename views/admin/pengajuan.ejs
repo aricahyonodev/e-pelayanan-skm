@@ -26,7 +26,7 @@
                         
                       </tbody>
                     </table>
-
+<%- include("../components/tableFooter") %>
 
                         </div>
                     </div>
@@ -48,7 +48,9 @@
       const {results} = await getDatatPengajuanSMK.json();
 
       const tableRow = document.getElementById("tableRow")
-      if(results.length === 0){
+       const resultLenght = results.length;
+      document.getElementById("totalTable").innerText = `Showing ${resultLenght} to ${resultLenght} of ${resultLenght} entries`
+      if(resultLenght === 0){
         tableRow.innerHTML = `
           <%- include("../components/tableEmpty.ejs") %> 
                   `;

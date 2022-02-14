@@ -28,7 +28,7 @@
                       </tbody>
                     </table>
 
-
+<%- include("../components/tableFooter") %>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,9 @@
       const tableRow = document.getElementById("tableRow")
       console.log(results);
       console.log(results[0].riwayat_skm);
-      if(results[0].riwayat_skm.length === 0){
+        const resultLenght = results.length;
+      document.getElementById("totalTable").innerText = `Showing ${resultLenght} to ${resultLenght} of ${resultLenght} entries`
+      if(resultLenght === 0){
           tableRow.innerHTML = `
           <%- include("../components/tableEmpty.ejs") %> 
                   `;

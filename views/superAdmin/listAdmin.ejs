@@ -1,31 +1,28 @@
 <%- include("../template/header") %> 
 <%- include("../components/admin/navigasi") %> 
+<div id="notif" class="  position-fixed w-100  d-none z-index-alert">
+  <div class="alert alert-danger text-center " role="alert" >
+                Data Berhasil di Hapus
+    </div>
+</div>
+    <div id="notif-update" class="position-fixed d-none w-100 z-index-alert">
+      <div class="alert alert-success text-center " role="alert" >
+                    Data Berhasil di Update
+        </div>
+    </div>
 <div class="row   ">
-   
         <%- include("../components/superAdmin/sideNavigasi") %> 
         
     <div class="row" >
       <div class="mt-4 col-9 offset-3" >
-          <div  class="row " >
-            <div id="notif" class=" col-9 position-fixed px-5 d-none"  style="z-index: 2000;" >
-              <div class="alert alert-danger text-center pe-5" role="alert" >
-                           Data Berhasil di Hapus
-               </div>
-            </div>
-          </div>
-          <div  class="row " >
-            <div id="notif-update" class=" col-9 position-fixed px-5 d-none"  style="z-index: 2000;" >
-              <div class="alert alert-success text-center pe-5" role="alert" >
-                           Data Berhasil di Update
-               </div>
-            </div>
-          </div>
+         
+         
             <div class="row justify-content-center ">
                 <div class="col-11">
                     <div class="card">
                         <div class="card-body">
                                 <!-- Title -->
-                <%- include("../components/titleCard", {title: "Daftar User"}) %> 
+                <%- include("../components/titleCard", {title: "Daftar Admin"}) %> 
                            <!-- Content -->
                     <table class="table text-center table-default">
                       <thead>
@@ -40,6 +37,7 @@
                         
                       </tbody>
                     </table>
+                    <%- include("../components/tableFooter") %>
                         </div>
                     </div>
                 </div>
@@ -58,9 +56,12 @@
       }
       const getDatatPengajuanSMK = await fetch('/api/super-admin/list-admin', config) 
       const {results} = await getDatatPengajuanSMK.json();
+      console.log(results);
       const tableRow = document.getElementById("tableRow")
       tableRow.innerHTML = ""
-      if(results.length === 0){
+       const resultLenght = results.length;
+      document.getElementById("totalTable").innerText = `Showing ${resultLenght} to ${resultLenght} of ${resultLenght} entries`
+      if(resultLenght === 0){
           tableRow.innerHTML += `
                   <tr>
                     <td colspan="4">Belum ada data</td>
@@ -89,14 +90,14 @@
                                 </div>
                                 <div class="col pl-1">
                                     <div class="d-grid gap-2">
-                                      <button class="btn btn-danger" type="button" id="hapus${dt._id}">Hapus</button>
+                                      <button class="btn btn-danger" type="button"  data-bs-toggle="modal" data-bs-target="#modalDeleteId${dt._id}">Hapus</button>
                                     </div>
                                 </div>
                               </div>
                       </td>
                     </tr>
                     
-                    <!-- Modal -->
+                    <!-- Modal Edit-->
 <div class="modal fade mt-5" id="exampleModal${dt._id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -139,14 +140,40 @@
     </div>
   </div>
 </div>
-                    `;
+              
+              <!-- Modal Delete-->
+<div class="modal fade mt-5 " id="modalDeleteId${dt._id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="row justify-content-center">
+   <div class="col-4 ">
+      <div class="modal-dialog">
+    <div class="modal-content border-0 ">
+      <div class="modal-body text-center pb-0 px-0">
+        <span class="iconify mt-4"  data-icon="fluent:delete-24-filled" style="color: #dc3545;" data-width="80" data-height="80"></span>
+        <p class="fs-5 my-1 text-danger  ">Apakah Anda Ingin Menghapus?</p>
+        <p class="fs-5 my-1 text-dark ">${dt.fullname}</p>
+       <div class="row mx-0 mt-4 ">
+            <div class="d-grid gap-2 col-6 mx-auto px-0">
+                <button type="button" class="btn btn-outline-danger rounded-0 px-0  text-uppercase fs-5" data-bs-dismiss="modal">Tidak</button>
+            </div>
+           <div class="d-grid gap-2 col-6 mx-auto px-0">
+                <button type="button"  id="hapus${dt._id}" class="btn btn-outline-danger rounded-0 px-0 py-2  text-uppercase fs-5 hapus-user">Ya</button>
+           </div>
+       </div>
+      </div>
+    </div>
+  </div>
+   </div>
+ </div>
+</div>
+              
+                   `;
 
         })
       }
        
       
 
-      loadHapus(document.querySelectorAll('.btn-danger'))
+      loadHapus(document.querySelectorAll('.hapus-user'))
       loadSimpan(document.querySelectorAll('.modal-btn-simpan'))
   }
 
@@ -172,7 +199,7 @@
              status : selectStatusvalue,
            })
         }
-        const getDatatPengajuanSMK = await fetch(`/api/super-admin/admin/${id}`, config) 
+        const getDatatPengajuanSMK = await fetch(`/api/super-admin/user/${id}`, config) 
         const {message} = await getDatatPengajuanSMK.json();
         console.log(message);
         if(message === "Update User Success"){
@@ -191,18 +218,21 @@
 
   const loadHapus = async (data) =>{
     for (let i = 0; i < data.length; i++) {
-        let id = data[i].id
-        document.getElementById(id).addEventListener('click', async ()=> {
+        let hapusId = data[i].id
+        document.getElementById(hapusId).addEventListener('click', async ()=> {
         const config = {
             headers: {
               'Authorization': `Bearer ${await localStorage.getItem('token')}`,
               },
             method: "delete",
         }
-        const getDatatPengajuanSMK = await fetch(`/api/super-admin/admin/${id.replace("hapus","")}`, config) 
+        let id = hapusId.replace("hapus","");
+        const getDatatPengajuanSMK = await fetch(`/api/super-admin/admin/${id}`, config) 
         const {message} = await getDatatPengajuanSMK.json();
-        console.log(message);
         if (message === "Delete User Success") {
+          const modalDelete = document.getElementById(`modalDeleteId${id}`)
+          const modal = bootstrap.Modal.getInstance(modalDelete)
+          modal.hide()
           const notigf = document.getElementById("notif")
           notigf.classList.remove("d-none")
           await getData();
