@@ -46,7 +46,8 @@
             const { message, results  } = await sendLogin.json(); 
             
             localStorage.setItem("token", results.token)
-            
+            localStorage.setItem("level", results.level)
+            localStorage.setItem("fullname", results.fullname)
             if(message === "Login Success"){
                 email.value = ""
                 password.value = ""
@@ -59,7 +60,7 @@
                 if(results.level === "super admin"){
                     window.location.href = "/home/list-admin";
                 }
-                console.log(results);
+                
                 
             }else{
                 const notif = document.getElementById("notif");

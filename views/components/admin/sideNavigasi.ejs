@@ -1,11 +1,14 @@
 <div class="col-3 position-fixed bg-white px-0 vh-100">
         <ul class="list-group  list-group-flush text-center side-nav">
-            <li class="list-group-item text-start ps-4 ">Ari (Admin)</li>
+            <li class="list-group-item text-start ps-4" id="loginAdmin"></li>
             <a class="text-decoration-none " href="/home/pengajuan" ><li id="pengajuan" class="list-group-item py-4 side-nav-list bgd-violet">PENGAJUAN</li></a>
             <a class="text-decoration-none" href="/home/riwayat"><li id="riwayat" class="list-group-item  py-4 side-nav-list">RIWAYAT</li>        </a>
         </ul>
 </div>
 <script>
+     const level    = localStorage.getItem('level')
+     const fullname = localStorage.getItem('fullname')
+      document.getElementById("loginAdmin").innerHTML = `${fullname} <span class="text-uppercase">(${level})</span>`
       const pengajuan = document.getElementById("pengajuan")
       const riwayat = document.getElementById("riwayat")
       const riwayatPattern = /riwayat/g;
