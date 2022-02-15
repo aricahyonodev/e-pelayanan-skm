@@ -33,7 +33,7 @@ App.use(Express.urlencoded({ extended: true }));
 App.use(Express.json())
 
 // Router
-const PORT = 3000; 
+const PORT = process.env.PORT || '8080'; 
 App.listen(PORT, () => {
   console.log(`Express Server Running ${PORT}`);
 });
