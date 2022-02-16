@@ -21,9 +21,10 @@ App.use(
     secret: "keyboard SKM",
     resave: false,
     saveUninitialized: true,
-    // cookie: { secure: true },
+    cookie: { secure: true },
   })
 );
+
 // Static File
 App.use(Express.static("public"));
 // Template Engine
