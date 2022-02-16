@@ -16,6 +16,7 @@ App.options("*", Cors());
 const FileUpload = require("express-fileupload");
 App.use(FileUpload());
 // Session
+App.set("trust proxy", 1);
 App.use(
   Session({
     secret: "keyboard SKM",
